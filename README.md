@@ -18,6 +18,9 @@ make cluster
 
 # Get cluster credentials
 make credentials
+
+# Install and configure helm
+make helm
 ```
 
 ## Reference
@@ -37,3 +40,6 @@ make cluster-delete
 ## Dependencies
 
 - [gcloud](https://cloud.google.com/sdk/gcloud/)
+- [kubectl](https://cloud.google.com/kubernetes-engine/docs/quickstart)
+- [docker](https://www.docker.com/)
+- [helm](https://helm.sh/)

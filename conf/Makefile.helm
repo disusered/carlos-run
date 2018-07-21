@@ -1,0 +1,23 @@
+.PHONY: helm cluster-admin-role tiller-service-account tiller-admin-role init update
+
+setup: cluster-admin-role tiller-cluster-admin-role init update
+
+cluster-admin-role:
+	-kubectl create clusterrolebinding user-admin-binding \
+		--clusterrole=cluster-admin \
+		--user=$(gcloud config get-value account)
+
+tiller-service-account:
+	-kubectl create serviceaccount \
+		--namespace kube-system tiller
+
+tiller-cluster-admin-role: tiller-service-account
+	-kubectl create clusterrolebinding tiller-admin-binding \
+		--clusterrole=cluster-admin \
+		--serviceaccount=kube-system:tiller
+
+init:
+	helm init --service-account=tiller
+
+update:
+	helm repo update

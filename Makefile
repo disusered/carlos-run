@@ -21,3 +21,6 @@ cluster-delete:
 
 credentials:
 	make -f $(PREFIX)/Makefile.k8 credentials
+
+helm:
+	make -f $(PREFIX)/Makefile.helm setup
