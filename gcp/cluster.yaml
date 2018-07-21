@@ -1,0 +1,15 @@
+imports:
+- path: templates/cluster.jinja
+  name: cluster.jinja
+
+resources:
+- name: carlos-run-cluster
+  type: cluster.jinja
+  properties:
+    name: carlos-run
+    zones:
+    - us-west1-a
+    - us-west1-b
+    - us-west1-c
+    initialNodeCount: 1
+    machineType: 'f1-micro'

@@ -1,6 +1,6 @@
-ZONE    ?= us-west1-b
+ZONE ?= us-west1-a
 
-.PHONY: login project zone configuration
+.PHONY: login project zone configuration cluster
 
 login: configuration
 	gcloud auth login --no-launch-browser

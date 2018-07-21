@@ -1,0 +1,10 @@
+PREFIX ?= gcp
+
+.PHONY: cluster credentials
+
+cluster:
+	gcloud deployment-manager deployments $(ACTION) $(PROJECT)-cluster \
+		$(shell if [ "$(ACTION)" != "delete" ]; then echo "--config $(PREFIX)/cluster.yaml"; fi )
+
+credentials:
+	gcloud container clusters get-credentials $(PROJECT)

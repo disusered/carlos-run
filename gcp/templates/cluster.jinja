@@ -1,0 +1,15 @@
+resources:
+- name: {{ properties['name'] }}
+  type: container.v1.cluster
+  properties:
+    zone: {{ properties['zones'][0] }}
+    cluster:
+      locations: {{ properties['zones'] }}
+      nodePools:
+      - name: {{ properties['name'] }}-pool
+        initialNodeCount: {{ properties['initialNodeCount'] | default(1) }}
+        config:
+          machineType: {{ properties['machineType'] | default('f1-micro') }}
+        management:
+          autoUpgrade: true
+          autoRepair: true
