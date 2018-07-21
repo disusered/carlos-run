@@ -10,9 +10,6 @@
 # Create profile and authenticate
 make login
 
-# Create carlos.run domain zone
-make domain
-
 # Create Kubernetes cluster
 make cluster
 
@@ -27,6 +24,9 @@ make dependencies
 
 # Configure https
 make tls
+
+# Create domain record for ingress
+make domain
 ```
 
 ## Reference

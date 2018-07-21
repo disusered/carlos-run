@@ -1,6 +1,26 @@
-.PHONY: zone
+IP   := $(shell kubectl --namespace default get services nginx-ingress-controller | tail -n 1 | awk '{print $$4}')
+
+TYPE   ?= A
+TTL    ?= 60
+DOMAIN ?= carlos.run
+
+.PHONY: zone transaction-start transaction-add transaction-execute
+
+domain: zone transaction-start transaction-add transaction-execute
 
 zone:
 	-gcloud dns managed-zones create $(PROJECT) \
 		--dns-name="carlos.run" \
 		--description="Registered on Google Domains"
+
+transaction-start:
+	gcloud dns record-sets transaction start --zone=$(PROJECT)
+
+transaction-add:
+	gcloud dns record-sets transaction add --zone=$(PROJECT) \
+		 --name="$(DOMAIN)." \
+		 --type=$(TYPE) \
+		 --ttl=$(TTL) "$(IP)"
+
+transaction-execute:
+	gcloud dns record-sets transaction execute --zone=$(PROJECT)

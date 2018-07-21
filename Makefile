@@ -8,7 +8,7 @@ login:
 	make -f $(PREFIX)/Makefile.gcloud login
 
 domain:
-	make -f $(PREFIX)/Makefile.domain zone
+	make -f $(PREFIX)/Makefile.domain domain
 
 cluster:
 	ENV ACTION=create make -f $(PREFIX)/Makefile.k8 cluster
