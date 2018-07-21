@@ -1,0 +1,6 @@
+.PHONY: zone
+
+zone:
+	-gcloud dns managed-zones create $(PROJECT) \
+		--dns-name="carlos.run" \
+		--description="Registered on Google Domains"

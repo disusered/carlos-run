@@ -1,0 +1,15 @@
+ZONE    ?= us-west1-b
+
+.PHONY: login project zone configuration
+
+login: configuration
+	gcloud auth login --no-launch-browser
+
+project:
+	-gcloud config set project $(PROJECT)
+
+zone:
+	gcloud config set compute/zone $(ZONE)
+
+configuration: project zone
+	-gcloud config configurations create $(PROJECT)
