@@ -1,4 +1,4 @@
-.PHONY: helm cluster-admin-role tiller-service-account tiller-admin-role init update
+.PHONY: helm cluster-admin-role tiller-service-account tiller-admin-role init update install nginx-ingress cert-manager
 
 setup: cluster-admin-role tiller-cluster-admin-role init update
 
@@ -21,3 +21,18 @@ init:
 
 update:
 	helm repo update
+
+install: nginx-ingress cert-manager
+
+nginx-ingress:
+	-helm install \
+		--name nginx-ingress \
+		--namespace=default \
+		--set rbac.create=true \
+		stable/nginx-ingress
+
+cert-manager:
+	-helm install \
+		--name cert-manager \
+		--namespace kube-system \
+		stable/cert-manager

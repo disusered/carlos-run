@@ -21,6 +21,9 @@ make credentials
 
 # Install and configure helm
 make helm
+
+# Install cluster dependencies
+make dependencies
 ```
 
 ## Reference

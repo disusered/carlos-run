@@ -2,7 +2,7 @@ export PROJECT ?= carlos-run
 
 PREFIX ?= conf
 
-.PHONY: login domain cluster cluster-update cluster-delete credentials
+.PHONY: login domain cluster cluster-update cluster-delete credentials helm dependencies
 
 login:
 	make -f $(PREFIX)/Makefile.gcloud login
@@ -24,3 +24,6 @@ credentials:
 
 helm:
 	make -f $(PREFIX)/Makefile.helm setup
+
+dependencies:
+	make -f $(PREFIX)/Makefile.helm install
