@@ -27,3 +27,9 @@ helm:
 
 dependencies:
 	make -f $(PREFIX)/Makefile.helm install
+
+tls:
+	make -f $(PREFIX)/Makefile.cert setup
+
+tls-delete:
+	make -f $(PREFIX)/Makefile.cert delete

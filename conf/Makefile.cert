@@ -1,0 +1,35 @@
+PREFIX          ?= k8
+SERVICE_ACCOUNT ?= clouddns-service-account
+
+.PHONY: setup delete service-account delete-service-account secrets delete-secrets issuers delete-issuers list-issuers
+
+setup: service-account secrets issuers
+
+delete: delete-secrets delete-service-account delete-issuers
+
+service-account:
+	-gcloud iam service-accounts create $(SERVICE_ACCOUNT) \
+		--display-name "Let's Encrypt DNS Challenge"
+	-gcloud projects add-iam-policy-binding $(PROJECT) \
+    --member serviceAccount:$(SERVICE_ACCOUNT)@$(PROJECT).iam.gserviceaccount.com \
+    --role roles/dns.admin
+
+$(SERVICE_ACCOUNT).json:
+	gcloud iam service-accounts keys create $(SERVICE_ACCOUNT).json \
+		--iam-account $(SERVICE_ACCOUNT)@$(PROJECT).iam.gserviceaccount.com
+
+delete-service-account:
+	rm $(SERVICE_ACCOUNT).json
+
+secrets: $(SERVICE_ACCOUNT).json
+	-kubectl create secret generic $(SERVICE_ACCOUNT) \
+		--from-file=./clouddns-service-account.json
+
+delete-secrets:
+	-kubectl delete secret $(SERVICE_ACCOUNT)
+
+issuers:
+	kubectl apply -f $(PREFIX)/issuers.yaml
+
+delete-issuers:
+	kubectl delete -f $(PREFIX)/issuers.yaml

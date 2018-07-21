@@ -24,6 +24,9 @@ make helm
 
 # Install cluster dependencies
 make dependencies
+
+# Configure https
+make tls
 ```
 
 ## Reference
@@ -38,6 +41,18 @@ make cluster-update
 
 # Delete cluster
 make cluster-delete
+```
+
+### HTTPS
+
+TLS is handled by [Let's Encrypt](https://letsencrypt.org) managed by [`cert-manager`](https://github.com/jetstack/cert-manager). It is installed to the cluster via [`helm`](https://helm.sh/). Below are additional commands for reviewing the configuration.
+
+```bash
+# Delete issuer along with its service account and secrets
+make tls-delete
+
+# List issuers
+kubectl get issuers
 ```
 
 ## Dependencies
